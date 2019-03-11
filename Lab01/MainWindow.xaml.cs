@@ -44,11 +44,16 @@ namespace Lab01
 
         private void AddNewPersonButton_Click(object sender, RoutedEventArgs e)
         {
-
-             if ((ageTextBox.Text).GetType()==typeof(string))
-             if(nameTextBox.Text.GetType()==typeof(string))
-            people.Add(new Person { Age = int.Parse(ageTextBox.Text), Name = nameTextBox.Text, Surname = surnameTextBox.Text }); 
-                 
+            try
+            {
+                if ((ageTextBox.Text).GetType() == typeof(string))
+                    if (nameTextBox.Text.GetType() == typeof(string))
+                        people.Add(new Person { Age = int.Parse(ageTextBox.Text), Name = nameTextBox.Text, Surname = surnameTextBox.Text });
+            } 
+            catch(Exception)
+            {
+                MessageBox.Show("podaj poprawne dane");
+            }
         }
 
         private void Photo_Click(object sender, RoutedEventArgs e)
