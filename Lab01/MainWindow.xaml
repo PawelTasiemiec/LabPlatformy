@@ -18,6 +18,7 @@
                         <TextBlock Text="{Binding Path=Name}" Width="100"/>
                         <TextBlock Text="{Binding Path=Age}" Width="100"/>
                         <TextBlock Text="{Binding Path=Surname}" Width="100"/>
+                        <Image Source="{Binding Path=Surname}" Width="100"/>
                         
                     </StackPanel>
                 </DataTemplate>
