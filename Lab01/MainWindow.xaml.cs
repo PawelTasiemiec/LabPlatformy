@@ -24,11 +24,10 @@ namespace Lab01
     /// </summary>
     public partial class MainWindow : Window
     {
-        
         ObservableCollection<Person> people = new ObservableCollection<Person>
         {
-            new Person { Name = "P1", Age = 1, Surname ="zbys" },
-            new Person { Name = "P2", Age = 2, Surname ="zbys" }
+            new Person { Name = "Przemo", Age = 1, Surname ="kowal" },
+            new Person { Name = "Radzio", Age = 2, Surname ="kowal" }
         };
 
         public ObservableCollection<Person> Items
@@ -46,9 +45,18 @@ namespace Lab01
         {
             try
             {
-                if ((ageTextBox.Text).GetType() == typeof(string))
-                    if (nameTextBox.Text.GetType() == typeof(string))
-                        people.Add(new Person { Age = int.Parse(ageTextBox.Text), Name = nameTextBox.Text, Surname = surnameTextBox.Text });
+                if (ageTextBox.Text.All(char.IsDigit))
+                {
+                    if (!(nameTextBox.Text.Any(char.IsDigit) || surnameTextBox.Text.Any(char.IsDigit)))
+                    {
+                        people.Add(new Person { Age = int.Parse(ageTextBox.Text), Name = nameTextBox.Text, Surname = surnameTextBox.Text, ImageRelativePath = image.Source });
+                        image.Source = null;
+                    }
+                    else
+                        MessageBox.Show("Imie i nazwisko nie mogą zawierać liczb");
+                }
+                else
+                    MessageBox.Show("Wiek musi być liczbą");
             } 
             catch(Exception)
             {
@@ -58,21 +66,17 @@ namespace Lab01
 
         private void Photo_Click(object sender, RoutedEventArgs e)
         {
-            {
                 OpenFileDialog op = new OpenFileDialog();
                 
                 if (op.ShowDialog() == true)
                 {
                     image.Source = new BitmapImage(new Uri(op.FileName));
                 }
-
-            }
-
         }
 
-        
-        
-
-        
+        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
+        {
+            
+        }
     }
 }

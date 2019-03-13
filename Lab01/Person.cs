@@ -12,7 +12,6 @@ namespace Lab01
         public string Name { get; set; }
         public string Surname { get; set; }
         public int Age { get; set; }
-        
-        
+        public System.Windows.Media.ImageSource ImageRelativePath { get; set; }
     }
 }
