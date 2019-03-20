@@ -1,0 +1,70 @@
+﻿<Window x:Class="Lab01.MainWindow"
+        xmlns="http://schemas.microsoft.com/winfx/2006/xaml/presentation"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:local="clr-namespace:Lab01"
+        mc:Ignorable="d"
+        Title="MainWindow" Height="800" Width="800">
+    <Grid>
+        <Grid.ColumnDefinitions>
+            <ColumnDefinition/>
+            <ColumnDefinition/>
+        </Grid.ColumnDefinitions>
+
+        <ListBox x:Name="listBox" Margin="20" SelectionChanged="ListBox_SelectionChanged" ItemsSource="{Binding Items}">
+            <ListBox.ItemTemplate>
+                <DataTemplate>
+                    <StackPanel Orientation="Horizontal">
+                        <TextBlock Text="{Binding Path=Name}" Width="100"/>
+                        <TextBlock Text="{Binding Path=Surname}" Width="100"/>
+                        <TextBlock Text="{Binding Path=Age}" Width="100"/>
+                        <Image Source="{Binding Path=ImageRelativePath}" Width="50"/>
+
+                    </StackPanel>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+
+        <StackPanel Grid.Column="1" Margin="20" Orientation="Vertical">
+            <Grid>
+                <Grid.ColumnDefinitions>
+                    <ColumnDefinition/>
+                    <ColumnDefinition/>
+                </Grid.ColumnDefinitions>
+
+                <StackPanel>
+                    <Image x:Name="image" Height="294.333" />
+                    <Button x:Name="photo" Content="Add picture" Click="Photo_Click" IsCancel="True" Height="22.627" />
+                </StackPanel>
+
+                <StackPanel Grid.Column="1">
+                    <Image  Height="200" Source="{Binding ElementName=listBox, Path=SelectedItem.ImageRelativePath}"/>
+                    <TextBlock TextWrapping="Wrap" Text="Name"/>
+                    <TextBox  IsReadOnly="True" Background="#eee" Height="23" Text="{Binding ElementName=listBox, Path=SelectedItem.Name}"/>
+                    <TextBlock TextWrapping="Wrap" Text="Surname"/>
+                    <TextBox  IsReadOnly="True" Background="#eee" Height="23" Text="{Binding ElementName=listBox, Path=SelectedItem.Surname}"/>
+                    <TextBlock TextWrapping="Wrap" Text="Age"/>
+                    <TextBox  IsReadOnly="True" Background="#eee" Height="23"  Text="{Binding ElementName=listBox, Path=SelectedItem.Age}" />
+                </StackPanel>
+            </Grid>
+            <TextBlock TextWrapping="Wrap" Text="Name"/>
+            <TextBox Name ="nameTextBox" Height="23" TextWrapping="Wrap" Text="Jarosław" Margin="0,0,0,10"/>
+            <TextBlock TextWrapping="Wrap" Text="Surname"/>
+            <TextBox Name ="surnameTextBox" Height="23" TextWrapping="Wrap" Text="Jarosław" Margin="0,0,0,10"/>
+            <TextBlock TextWrapping="Wrap" Text="Age"/>
+            <TextBox Name="ageTextBox" Height="23" TextWrapping="Wrap" Text="99"  Margin="0,0,0,10"/>
+            <Button Name = "addNewPersonButton" Content="Add new person" Click="AddNewPersonButton_Click"/>
+            <Button x:Name="dodaj" Content="Button" Click="Dodaj_Click"/>
+            <TextBox x:Name="finalNumberTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <TextBlock  x:Name="progressTextBlock" TextWrapping="Wrap"/>
+            <TextBlock x:Name="progressTextBlock2" TextWrapping="Wrap"/>
+            
+
+
+        </StackPanel>
+        
+
+
+    </Grid>
+</Window>
