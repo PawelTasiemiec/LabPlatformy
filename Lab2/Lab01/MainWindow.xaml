@@ -34,12 +34,12 @@
                 </Grid.ColumnDefinitions>
 
                 <StackPanel>
-                    <Image x:Name="image" Height="294.333" />
+                    <Image x:Name="image" Height="194.333" />
                     <Button x:Name="photo" Content="Add picture" Click="Photo_Click" IsCancel="True" Height="22.627" />
                 </StackPanel>
 
                 <StackPanel Grid.Column="1">
-                    <Image  Height="200" Source="{Binding ElementName=listBox, Path=SelectedItem.ImageRelativePath}"/>
+                    <Image  Height="100" Source="{Binding ElementName=listBox, Path=SelectedItem.ImageRelativePath}"/>
                     <TextBlock TextWrapping="Wrap" Text="Name"/>
                     <TextBox  IsReadOnly="True" Background="#eee" Height="23" Text="{Binding ElementName=listBox, Path=SelectedItem.Name}"/>
                     <TextBlock TextWrapping="Wrap" Text="Surname"/>
@@ -55,11 +55,17 @@
             <TextBlock TextWrapping="Wrap" Text="Age"/>
             <TextBox Name="ageTextBox" Height="23" TextWrapping="Wrap" Text="99"  Margin="0,0,0,10"/>
             <Button Name = "addNewPersonButton" Content="Add new person" Click="AddNewPersonButton_Click"/>
-            <Button x:Name="dodaj" Content="Button" Click="Dodaj_Click"/>
+            <Button x:Name="dodaj" Content="Perform stupid calculations" Click="Dodaj_Click"/>
+            <TextBlock Text="Final number"/>
             <TextBox x:Name="finalNumberTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
             <TextBlock  x:Name="progressTextBlock" TextWrapping="Wrap"/>
             <TextBlock x:Name="progressTextBlock2" TextWrapping="Wrap"/>
-            
+            <Button x:Name="weatherDataButton" Content="Load the weather data from the known locations" Click="LoadWeatherData"/>
+            <ProgressBar x:Name="weatherDataProgressBar" Height="20"/>
+            <TextBlock x:Name="weatherDataTextBlock" />
+            <TextBlock Text="City name:"/>
+            <TextBox x:Name="CityNameTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
+            <Button Content="CANCEL" Click="Cancel_Click"/>
 
 
         </StackPanel>
