@@ -1,0 +1,23 @@
+﻿<?xml version="1.0" encoding="utf-8"?>
+<Mapping Space="C-S" xmlns="http://schemas.microsoft.com/ado/2009/11/mapping/cs">
+  <EntityContainerMapping StorageEntityContainer="DotNetProjectModelStoreContainer" CdmEntityContainer="DotNetProjectEntities3">
+    <EntitySetMapping Name="City">
+      <EntityTypeMapping TypeName="DotNetProjectModel.City">
+        <MappingFragment StoreEntitySet="City">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Pressure" ColumnName="Pressure" />
+          <ScalarProperty Name="Temperature" ColumnName="Temperature" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+    <EntitySetMapping Name="Person">
+      <EntityTypeMapping TypeName="DotNetProjectModel.Person">
+        <MappingFragment StoreEntitySet="Person">
+          <ScalarProperty Name="Name" ColumnName="Name" />
+          <ScalarProperty Name="Surname" ColumnName="Surname" />
+          <ScalarProperty Name="Age" ColumnName="Age" />
+        </MappingFragment>
+      </EntityTypeMapping>
+    </EntitySetMapping>
+  </EntityContainerMapping>
+</Mapping>
