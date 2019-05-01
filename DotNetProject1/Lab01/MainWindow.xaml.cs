@@ -29,7 +29,7 @@ namespace Lab01
     public partial class MainWindow : Window
     {
         BackgroundWorker worker = new BackgroundWorker();
-        DotNetProjectEntities3 db;
+        DotNetProjectEntities4 db;
 
         
 
@@ -117,9 +117,15 @@ namespace Lab01
 
                         people.Add(new PersonView { Age = int.Parse(ageTextBox.Text), Name = nameTextBox.Text, Surname = surnameTextBox.Text, ImageRelativePath = image.Source });
                         image.Source = null;
-                    db.Person.Add(new Person { Name = nameTextBox.Text, Surname = surnameTextBox.Text, Age = int.Parse(ageTextBox.Text) });
+                    List<Person> allPeople = db.People.ToList();
+                    int id;
+                    if (allPeople.Count > 0)
+                        id = allPeople[allPeople.Count - 1].Id;
+                    else
+                        id = 0;  
+                    db.People.Add(new Person { Name = nameTextBox.Text, Surname = surnameTextBox.Text, Age = int.Parse(ageTextBox.Text), Id=id+1 });
                     db.SaveChanges();
-                    DataGridPerson.ItemsSource = db.Person.ToList();
+                    DataGridPerson.ItemsSource = db.People.ToList();
                     }
                     else
                         MessageBox.Show("Imie i nazwisko nie mogą zawierać liczb");
@@ -256,8 +262,8 @@ namespace Lab01
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            db = new DotNetProjectEntities3();
-            DataGridPerson.ItemsSource = db.Person.ToList();
+            db = new DotNetProjectEntities4();
+            DataGridPerson.ItemsSource = db.People.ToList();
         }
     }
 }

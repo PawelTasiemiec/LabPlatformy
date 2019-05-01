@@ -13,10 +13,10 @@ namespace Lab01
     using System.Data.Entity;
     using System.Data.Entity.Infrastructure;
     
-    public partial class DotNetProjectEntities3 : DbContext
+    public partial class DotNetProjectEntities4 : DbContext
     {
-        public DotNetProjectEntities3()
-            : base("name=DotNetProjectEntities3")
+        public DotNetProjectEntities4()
+            : base("name=DotNetProjectEntities4")
         {
         }
     
@@ -25,7 +25,7 @@ namespace Lab01
             throw new UnintentionalCodeFirstException();
         }
     
-        public virtual DbSet<City> City { get; set; }
-        public virtual DbSet<Person> Person { get; set; }
+        public virtual DbSet<City> Cities { get; set; }
+        public virtual DbSet<Person> People { get; set; }
     }
 }
