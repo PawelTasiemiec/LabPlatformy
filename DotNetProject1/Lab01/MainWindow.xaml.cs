@@ -20,6 +20,7 @@ using System.Windows.Media;
 using System.Windows.Media.Imaging;
 using System.Windows.Navigation;
 using System.Windows.Shapes;
+using System.Windows.Threading;
 
 namespace Lab01
 {
@@ -29,7 +30,7 @@ namespace Lab01
     public partial class MainWindow : Window
     {
         BackgroundWorker worker = new BackgroundWorker();
-        DotNetProjectEntities3 db;
+        DotNetProjectEntities4 db;
 
         
 
@@ -108,8 +109,6 @@ namespace Lab01
         
         private void AddNewPersonButton_Click(object sender, RoutedEventArgs e)
         {
-           // try
-            //{
                 if (ageTextBox.Text.All(char.IsDigit))
                 {
                     if (!(nameTextBox.Text.Any(char.IsDigit) || surnameTextBox.Text.Any(char.IsDigit)))
@@ -117,20 +116,27 @@ namespace Lab01
 
                         people.Add(new PersonView { Age = int.Parse(ageTextBox.Text), Name = nameTextBox.Text, Surname = surnameTextBox.Text, ImageRelativePath = image.Source });
                         image.Source = null;
-                    db.Person.Add(new Person { Name = nameTextBox.Text, Surname = surnameTextBox.Text, Age = int.Parse(ageTextBox.Text) });
-                    db.SaveChanges();
-                    DataGridPerson.ItemsSource = db.Person.ToList();
+                        try
+                        {
+                            List<Person> allPeople = db.People.ToList();
+                            int id;
+                            if (allPeople.Count > 0)
+                                id = allPeople[allPeople.Count - 1].Id;
+                            else
+                                id = 0;
+                            db.People.Add(new Person { Name = nameTextBox.Text, Surname = surnameTextBox.Text, Age = int.Parse(ageTextBox.Text), Id = id + 1 });
+                            db.SaveChanges();
+                        }
+                        catch
+                        {
+                        MessageBox.Show("Failed to add a new record to database");
+                        }
                     }
                     else
-                        MessageBox.Show("Imie i nazwisko nie mogą zawierać liczb");
+                        MessageBox.Show("Name and Surname can't include numbers");
                 }
                 else
-                    MessageBox.Show("Wiek musi być liczbą");
-           // } 
-            //catch(Exception)
-            //{
-             //   MessageBox.Show("podaj poprawne dane");
-            //}
+                    MessageBox.Show("Age must be a number");
         }
 
         public void AddCity(CityView city)
@@ -159,6 +165,21 @@ namespace Lab01
                         Pressure = result.Pressure.ToString() + " hPa",
                         Temperature = (int)Math.Round(result.Temperature)
                     });
+                    try
+                    {
+                        List<City> allCities = db.Cities.ToList();
+                        int id;
+                        if (allCities.Count > 0)
+                            id = allCities[allCities.Count - 1].Id;
+                        else
+                            id = 0;
+                        db.Cities.Add(new City { Name = result.City, Pressure = result.Pressure.ToString() + " hPa", Temperature = (int)Math.Round(result.Temperature), Id = id + 1 });
+                        db.SaveChanges();
+                    }
+                    catch
+                    {
+                        MessageBox.Show("Failed to add a new record to database");
+                    }
                 }
             }
         }
@@ -210,6 +231,21 @@ namespace Lab01
                                 Pressure = result.Pressure.ToString() + " hPa",
                                 Temperature = (int)Math.Round(result.Temperature)
                             });
+                        try
+                        {
+                            List<City> allCities = db.Cities.ToList();
+                            int id;
+                            if (allCities.Count > 0)
+                                id = allCities[allCities.Count - 1].Id;
+                            else
+                                id = 0;
+                            db.Cities.Add(new City { Name = result.City, Pressure = result.Pressure.ToString() + " hPa", Temperature = (int)Math.Round(result.Temperature), Id = id + 1 });
+                            db.SaveChanges();
+                        }
+                        catch
+                        {
+                            MessageBox.Show("Failed to add a new record to database");
+                        }
                     }
                     Thread.Sleep(2000);
                 }
@@ -226,11 +262,6 @@ namespace Lab01
                 {
                     image.Source = new BitmapImage(new Uri(op.FileName));
                 }
-        }
-
-        private void ListBox_SelectionChanged(object sender, SelectionChangedEventArgs e)
-        {
-            
         }
         
         protected void UpdateProgressBlock(string text, TextBlock textBlock)
@@ -256,8 +287,98 @@ namespace Lab01
 
         private void Window_Loaded(object sender, RoutedEventArgs e)
         {
-            db = new DotNetProjectEntities3();
-            DataGridPerson.ItemsSource = db.Person.ToList();
+            db = new DotNetProjectEntities4();
+            DispatcherTimer dt = new DispatcherTimer();
+            dt.Interval = TimeSpan.FromSeconds(5);
+            dt.Tick += Dt_Tick;
+            dt.Start();
+        }
+
+        private async void Dt_Tick(object sender, EventArgs e)
+        {
+            string responseXML = await WeatherConnection.LoadDataAsync("Warsaw");
+            WeatherDataEntry result;
+
+            using (MemoryStream stream = new MemoryStream(Encoding.UTF8.GetBytes(responseXML)))
+            {
+                result = ParseWeather_XmlReader.Parse(stream);
+                Cities.Add(new CityView()
+                {
+                    Name = result.City,
+                    Pressure = result.Pressure.ToString() + " hPa",
+                    Temperature = (int)Math.Round(result.Temperature)
+                });
+                try
+                {
+                    List<City> allCities = db.Cities.ToList();
+                    int id;
+                    if (allCities.Count > 0)
+                        id = allCities[allCities.Count - 1].Id;
+                    else
+                        id = 0;
+                    db.Cities.Add(new City { Name = result.City, Pressure = result.Pressure.ToString() + " hPa", Temperature = (int)Math.Round(result.Temperature), Id = id + 1 });
+                    db.SaveChanges();
+                }
+                catch
+                {
+                    MessageBox.Show("Failed to add a new record to database");
+                }
+            }
+        }
+
+        private void LoadFromDb(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                List<Person> allPeople = db.People.ToList();
+                List<City> allCities = db.Cities.ToList();
+                people.Clear();
+                cities.Clear();
+                foreach (Person person in allPeople)
+                {
+                    people.Add(new PersonView { Name = person.Name, Surname = person.Surname, Age = person.Age, ImageRelativePath = null });
+                }
+                foreach (City city in allCities)
+                {
+                    cities.Add(new CityView { Name = city.Name, Pressure = city.Pressure, Temperature = city.Temperature });
+                }
+            }
+            catch
+            {
+                MessageBox.Show("Failed to load data from database");
+            }
+        }
+
+        private void DeleteSelectedPersonButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                PersonView selectedPerson = (PersonView)listBox.SelectedItem;
+                var search = db.People.FirstOrDefault(x => x.Name == selectedPerson.Name && x.Surname == selectedPerson.Surname && x.Age == selectedPerson.Age);
+                db.People.Remove(search);
+                db.SaveChanges();
+                people.Remove((PersonView)listBox.SelectedItem);
+            }
+            catch
+            {
+                MessageBox.Show("Pick a person you want to remove from the list");
+            }
+        }
+
+        private void DeleteSelectedCityButton_Click(object sender, RoutedEventArgs e)
+        {
+            try
+            {
+                CityView selectedCity = (CityView)listBoxCity.SelectedItem;
+                var search = db.Cities.FirstOrDefault(x => x.Name == selectedCity.Name && x.Pressure == selectedCity.Pressure && x.Temperature == selectedCity.Temperature);
+                db.Cities.Remove(search);
+                db.SaveChanges();
+                cities.Remove((CityView)listBoxCity.SelectedItem);
+            }
+            catch
+            {
+                MessageBox.Show("Pick a city you want to remove from the list");
+            }
         }
     }
 }

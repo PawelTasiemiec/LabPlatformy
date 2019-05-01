@@ -1,4 +1,4 @@
-﻿// T4 code generation is enabled for model 'C:\Users\micol\Desktop\PWR\semestr 6\.Net i Java\LabPlatformy-master\Lab3\Lab01\Model.edmx'. 
+﻿// T4 code generation is enabled for model 'C:\Users\micol\Desktop\PWR\semestr 6\.Net i Java\LabPlatformy-master\DotNetProject1\Lab01\Model.edmx'. 
 // To enable legacy code generation, change the value of the 'Code Generation Strategy' designer
 // property to 'Legacy ObjectContext'. This property is available in the Properties Window when the model
 // is open in the designer.

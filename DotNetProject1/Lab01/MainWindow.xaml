@@ -5,29 +5,21 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:local="clr-namespace:Lab01"
         mc:Ignorable="d"
-        Title="MainWindow" Height="605.333" Width="800" Loaded="Window_Loaded">
+        Title="MainWindow" Height="673.333" Width="800" Loaded="Window_Loaded">
     <Grid Margin="-11,0,11.333,10">
         <Grid.ColumnDefinitions>
             <ColumnDefinition Width="0.75*"/>
             <ColumnDefinition Width="0.75*"/>
             <ColumnDefinition/>
-            <ColumnDefinition/>
         </Grid.ColumnDefinitions>
-        <DataGrid Name="DataGridPerson" Grid.Column="3" AutoGenerateColumns="False">
-            <DataGrid.Columns>
-                <DataGridTextColumn Binding="{Binding Name}" Header="Name"/>
-                <DataGridTextColumn Binding="{Binding Surname}" Header="Surname"/>
-                <DataGridTextColumn Binding="{Binding Age}" Header="Age"/>
-            </DataGrid.Columns>
-        </DataGrid>
         <Label Content="People" HorizontalAlignment="Center"/>
-        <ListBox x:Name="listBox" Margin="12,20,6,20.333" SelectionChanged="ListBox_SelectionChanged" ItemsSource="{Binding Items}">
+        <ListBox x:Name="listBox" Margin="12,20,6,20.333" ItemsSource="{Binding Items}">
             <ListBox.ItemTemplate>
                 <DataTemplate>
                     <StackPanel Orientation="Horizontal">
-                        <TextBlock Text="{Binding Path=Name}" Width="50"/>
-                        <TextBlock Text="{Binding Path=Surname}" Width="50"/>
-                        <TextBlock Text="{Binding Path=Age}" Width="50"/>
+                        <TextBlock Text="{Binding Path=Name}" Width="75"/>
+                        <TextBlock Text="{Binding Path=Surname}" Width="75"/>
+                        <TextBlock Text="{Binding Path=Age}" Width="15"/>
                         <Image Source="{Binding Path=ImageRelativePath}" Width="50"/>
 
                     </StackPanel>
@@ -74,8 +66,9 @@
             <TextBox Name ="surnameTextBox" Height="23" TextWrapping="Wrap" Text="Jarosław" Margin="0,0,0,10"/>
             <TextBlock TextWrapping="Wrap" Text="Age"/>
             <TextBox Name="ageTextBox" Height="23" TextWrapping="Wrap" Text="99"  Margin="0,0,0,10"/>
-            <Button Name = "addNewPersonButton" Content="Add new person" Click="AddNewPersonButton_Click" Margin="0,0,0,10"/>
-            
+            <Button Name = "addNewPersonButton" Content="Add new person" Click="AddNewPersonButton_Click"/>
+            <Button Name="deleteSelectedPersonButton" Content="Delete selected person" Click="DeleteSelectedPersonButton_Click"/>
+            <Button Name="LoadDataFromDb" Content="Load data from database" Click="LoadFromDb" Margin="0,0,0,10"/>
             <Button x:Name="weatherDataButton" Content="Load the weather data from the known locations" Click="LoadWeatherData"/>
             <Button Content="Cancel" Click="Cancel_Click"/>
             <ProgressBar x:Name="weatherDataProgressBar" Height="20"/>
@@ -83,7 +76,7 @@
             <TextBlock Text="City name:"/>
             <TextBox x:Name="CityNameTextBox" HorizontalAlignment="Left" Height="23" TextWrapping="Wrap" VerticalAlignment="Top" Width="120"/>
             <Button x:Name="loadCity" Content="Load city" Click="LoadCity"/>
-
+            <Button Name="DeleteSelectedCityButton" Content="Delete selected city" Click="DeleteSelectedCityButton_Click"/>
         </StackPanel>
         
 

@@ -1,43 +1,25 @@
 ﻿<?xml version="1.0" encoding="utf-8"?>
 <Schema Namespace="DotNetProjectModel.Store" Provider="System.Data.SqlClient" ProviderManifestToken="2012" Alias="Self" xmlns:store="http://schemas.microsoft.com/ado/2007/12/edm/EntityStoreSchemaGenerator" xmlns:customannotation="http://schemas.microsoft.com/ado/2013/11/edm/customannotation" xmlns="http://schemas.microsoft.com/ado/2009/11/edm/ssdl">
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'DotNetProject.dbo.City' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="City">
     <Key>
-      <PropertyRef Name="Name" />
-      <PropertyRef Name="Pressure" />
-      <PropertyRef Name="Temperature" />
+      <PropertyRef Name="Id" />
     </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Pressure" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Temperature" Type="int" Nullable="false" />
   </EntityType>
-  <!--Errors Found During Generation:
-warning 6002: The table/view 'DotNetProject.dbo.Person' does not have a primary key defined. The key has been inferred and the definition was created as a read-only table/view.-->
   <EntityType Name="Person">
     <Key>
-      <PropertyRef Name="Name" />
-      <PropertyRef Name="Surname" />
-      <PropertyRef Name="Age" />
+      <PropertyRef Name="Id" />
     </Key>
+    <Property Name="Id" Type="int" Nullable="false" />
     <Property Name="Name" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Surname" Type="nvarchar" MaxLength="50" Nullable="false" />
     <Property Name="Age" Type="int" Nullable="false" />
   </EntityType>
   <EntityContainer Name="DotNetProjectModelStoreContainer">
-    <EntitySet Name="City" EntityType="Self.City" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [City].[Name] AS [Name], 
-    [City].[Pressure] AS [Pressure], 
-    [City].[Temperature] AS [Temperature]
-    FROM [dbo].[City] AS [City]</DefiningQuery>
-    </EntitySet>
-    <EntitySet Name="Person" EntityType="Self.Person" store:Type="Tables" store:Schema="dbo">
-      <DefiningQuery>SELECT 
-    [Person].[Name] AS [Name], 
-    [Person].[Surname] AS [Surname], 
-    [Person].[Age] AS [Age]
-    FROM [dbo].[Person] AS [Person]</DefiningQuery>
-    </EntitySet>
+    <EntitySet Name="City" EntityType="Self.City" Schema="dbo" store:Type="Tables" />
+    <EntitySet Name="Person" EntityType="Self.Person" Schema="dbo" store:Type="Tables" />
   </EntityContainer>
 </Schema>
