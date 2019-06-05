@@ -1,3 +1,4 @@
+import javax.swing.*;
 import java.awt.*;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
@@ -8,10 +9,17 @@ class Multiplayer extends GameBoard{
     private ArrayList<Integer> x2,y2;
     private int dots2;
     static int wynik2 = 0;
+    private Image head2;
+    private Image dot2;
     public Multiplayer()
     {
         super();
         addKeyListener(new KAdapter2());
+        ImageIcon ih2 = new ImageIcon("src/head2.jpg");
+        head2 = ih2.getImage();
+
+        ImageIcon ib2 = new ImageIcon("src/body2.jpg");
+        dot2 = ib2.getImage();
         init_multiplayer();
     }
 
@@ -77,25 +85,25 @@ class Multiplayer extends GameBoard{
             }
         }
 
-        if (x.get(0) > WIDTH)
+        if (x.get(0) > WIDTH-20)
             status = false;
 
         if (x.get(0) < 20)
             status = false;
 
-        if (y.get(0) > HEIGHT)
+        if (y.get(0) > HEIGHT-20)
             status = false;
 
         if (y.get(0) < 20)
             status = false;
 
-        if (x2.get(0) > WIDTH)
+        if (x2.get(0) > WIDTH-20)
             status = false;
 
         if (x2.get(0) < 20)
             status = false;
 
-        if (y2.get(0) > HEIGHT)
+        if (y2.get(0) > HEIGHT-20)
             status = false;
 
         if (y2.get(0) < 20)

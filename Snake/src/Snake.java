@@ -180,7 +180,7 @@ public class Snake extends JFrame {
 
     public void getSpeed() {
         final String[] options = { "1", "2", "3", "4", "5", "6", "7", "8", "9", "10" };
-        final int level = JOptionPane.showOptionDialog(null, "Wybierz prędkość 1-10:", "Wybierz predkosc",
+        final int level = JOptionPane.showOptionDialog(null, "Choose a level from 1-10:", "Choose a Level",
                 JOptionPane.CLOSED_OPTION, JOptionPane.CLOSED_OPTION, null, options, options);
         switch (level) {
             case 0:

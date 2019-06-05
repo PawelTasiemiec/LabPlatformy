@@ -1,21 +1,20 @@
-import javax.imageio.ImageIO;
 import javax.swing.*;
-import java.awt.*;
+import java.awt.Color;
+import java.awt.Graphics;
+import java.awt.Toolkit;
 import java.awt.event.ActionListener;
 import java.awt.event.ActionEvent;
 import java.awt.event.KeyAdapter;
 import java.awt.event.KeyEvent;
-import java.awt.image.BufferedImage;
+import java.awt.Image;
 import java.util.ArrayList;
 
 class GameBoard extends JPanel implements ActionListener {
 
     protected Image head;
-    protected Image head2;
     protected Image dot;
     protected Image appleImage;
     protected Image mouseImage;
-    protected Image dot2;
     protected Food mouse;
     protected Food apple;
     protected final int HEIGHT = 750;
@@ -32,7 +31,6 @@ class GameBoard extends JPanel implements ActionListener {
 
         addKeyListener(new KAdapter());
 
-
         move = new Move();
         apple = new Food(0,0);
         mouse = new Food(0,0);
@@ -40,14 +38,9 @@ class GameBoard extends JPanel implements ActionListener {
 
         ImageIcon ih = new ImageIcon("src/head.jpg");
         head = ih.getImage();
-        ImageIcon ih2 = new ImageIcon("src/head2.jpg");
-        head2 = ih2.getImage();
 
-        ImageIcon ib = new ImageIcon("src/body2.jpg");
+        ImageIcon ib = new ImageIcon("src/body.png");
         dot = ib.getImage();
-
-        ImageIcon ib2 = new ImageIcon("src/body.png");
-        dot2 = ib2.getImage();
 
         ImageIcon ia = new ImageIcon("src/apple.jpg");
         appleImage = ia.getImage();
@@ -76,7 +69,7 @@ class GameBoard extends JPanel implements ActionListener {
         timer = new Timer(Snake.speed, this);
     }
 
-    public void paint(Graphics g)  {
+    public void paint(Graphics g) {
         super.paint(g);
 
         if (status) {
@@ -90,7 +83,6 @@ class GameBoard extends JPanel implements ActionListener {
                     g.drawImage(dot, x.get(i), y.get(i), this);
             }
         }
-
     }
 
     public void checkCollision() {
@@ -102,13 +94,13 @@ class GameBoard extends JPanel implements ActionListener {
             }
         }
 
-        if (x.get(0) > WIDTH)
+        if (x.get(0) > WIDTH-20)
             status = false;
 
         if (x.get(0) < 20)
             status = false;
 
-        if (y.get(0) > HEIGHT)
+        if (y.get(0) > HEIGHT-20)
             status = false;
 
         if (y.get(0) < 20)
@@ -120,10 +112,10 @@ class GameBoard extends JPanel implements ActionListener {
         while (bl) {
             int r = 1;
             while(r%2!=0)
-                r = (int) (Math.random()*77+1);
+                r = (int) (Math.random()*76+1);
             apple.x = r*10;
             while(r%2!=0)
-                r = (int) (Math.random()*72+1);
+                r = (int) (Math.random()*71+1);
             apple.y = r*10;
 
             if ((x.contains(apple.x)) && (y.contains(apple.y)))
@@ -153,10 +145,10 @@ class GameBoard extends JPanel implements ActionListener {
         while (bl) {
             int r = 1;
             while(r%2!=0)
-                r = (int) (Math.random()*77+1);
+                r = (int) (Math.random()*76+1);
             mouse.x = r*10;
             while(r%2!=0)
-                r = (int) (Math.random()*74+1);
+                r = (int) (Math.random()*71+1);
             mouse.y = r*10;
 
             if ((x.contains(mouse.x)) && (y.contains(mouse.y)))
