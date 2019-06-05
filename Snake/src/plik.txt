@@ -1,0 +1,11 @@
+as , 130
+winer , 110
+mikiTest , 80
+kozaczers , 60
+pawel , 60
+miki , 40
+kozi , 40
+miki2 , 30
+ss , 30
+
+miki , 20
